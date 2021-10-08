@@ -1,22 +1,35 @@
-import { action, makeObservable, observable } from "mobx"
-interface UserType {
-  id: string,
-  Email: string,
-  Name: string
+import {action, makeObservable, observable} from 'mobx';
+export interface UserType {
+  id: string;
+  Email: string;
+  Name: string;
 }
+interface UserList {
+  data: [UserType];
+}
+
+const initUser: UserType = {
+  id: '12345',
+  Email: 'hieuhm@gmail.com',
+  Name: 'hieuhm',
+};
+
+const initUserList: UserList = {data: [initUser]};
+
 class UserInfor {
-  UserList = [{}]
+  UserList: UserList = initUserList;
   constructor() {
     makeObservable(this, {
       UserList: observable,
-      addUser: action
-    })
+      addUser: action,
+    });
   }
-  addUser(user: {}) {
-    this.UserList = [...this.UserList, { ...user, id: Math.random() }]
+
+  addUser(user: UserType) {
+    this.UserList.data.push(user);
   }
-  deleteUser(id: string,) {
+  deleteUser(id: string) {
     // this.UserList = this.UserList.filter(user => user?.id !== id)
   }
 }
-export const userInfor = new UserInfor()
+export const userInfor = new UserInfor();
