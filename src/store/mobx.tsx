@@ -5,7 +5,7 @@ export interface UserType {
   Name: string;
 }
 interface UserList {
-  data: [UserType];
+  data: UserType[];
 }
 
 const initUser: UserType = {
@@ -14,10 +14,10 @@ const initUser: UserType = {
   Name: 'hieuhm',
 };
 
-const initUserList: UserList = {data: [initUser]};
+// const initUserList: UserList = ;
 
 class UserInfor {
-  UserList: UserList = initUserList;
+  UserList: UserList = {data: [initUser]};
   constructor() {
     makeObservable(this, {
       UserList: observable,
@@ -26,7 +26,7 @@ class UserInfor {
   }
 
   addUser(user: UserType) {
-    this.UserList.data.push(user);
+    this.UserList = {...this.UserList, data: [...this.UserList.data, user]};
   }
   deleteUser(id: string) {
     // this.UserList = this.UserList.filter(user => user?.id !== id)
